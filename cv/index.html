@@ -503,12 +503,21 @@
         { side: 'right', pos: 45, bottom: 2,  w: 55, hue: 2,    sway: 4,  dur: 4.6 },
 
         // A few porch-level clumps spaced out (climbing slightly up the porch)
-        { side: 'left',  pos: 28, bottom: 7,  w: 50, hue: 4,    sway: 4,  dur: 4.6 },
-        { side: 'left',  pos: 36, bottom: 9,  w: 45, hue: -6,   sway: 0          },
-        { side: 'left',  pos: 44, bottom: 8,  w: 50, hue: 0,    sway: 5,  dur: 5.0 },
-        { side: 'right', pos: 28, bottom: 8,  w: 50, hue: -4,   sway: 5,  dur: 4.5 },
-        { side: 'right', pos: 36, bottom: 7,  w: 45, hue: 6,    sway: 0          },
-        { side: 'right', pos: 44, bottom: 9,  w: 50, hue: -2,   sway: 4,  dur: 4.8 },
+        // Porch-level clumps — rendered as solid green so they pop against the dark porch slab
+        { side: 'left',  pos: 24, bottom: 7,  w: 55, hue: 4,    sway: 4,  dur: 4.6, solid: true },
+        { side: 'left',  pos: 28, bottom: 9,  w: 50, hue: -6,   sway: 0,           solid: true },
+        { side: 'left',  pos: 32, bottom: 8,  w: 50, hue: 0,    sway: 5,  dur: 5.0, solid: true },
+        { side: 'left',  pos: 36, bottom: 7,  w: 45, hue: 6,    sway: 0,           solid: true },
+        { side: 'left',  pos: 40, bottom: 9,  w: 50, hue: -2,   sway: 4,  dur: 4.8, solid: true },
+        { side: 'left',  pos: 44, bottom: 8,  w: 45, hue: 8,    sway: 0,           solid: true },
+        { side: 'left',  pos: 48, bottom: 7,  w: 50, hue: -4,   sway: 5,  dur: 4.7, solid: true },
+        { side: 'right', pos: 24, bottom: 8,  w: 55, hue: -4,   sway: 5,  dur: 4.5, solid: true },
+        { side: 'right', pos: 28, bottom: 7,  w: 50, hue: 6,    sway: 0,           solid: true },
+        { side: 'right', pos: 32, bottom: 9,  w: 50, hue: 0,    sway: 4,  dur: 4.8, solid: true },
+        { side: 'right', pos: 36, bottom: 8,  w: 45, hue: -6,   sway: 0,           solid: true },
+        { side: 'right', pos: 40, bottom: 7,  w: 50, hue: 4,    sway: 5,  dur: 4.6, solid: true },
+        { side: 'right', pos: 44, bottom: 9,  w: 45, hue: 8,    sway: 0,           solid: true },
+        { side: 'right', pos: 48, bottom: 8,  w: 50, hue: -2,   sway: 4,  dur: 4.7, solid: true },
 
         // Small offsetting wisps to break the regular spacing
         { side: 'left',  pos: 7,  bottom: 4,  w: 35, hue: 8,    sway: 4,  dur: 4.0 },
@@ -520,7 +529,11 @@
 
       ];
 
+      const isMobile = window.matchMedia('(max-width: 600px)').matches;
       clumps.forEach((c, i) => {
+        // On mobile the sauna is smaller/lower, so the higher porch-level clumps end up
+        // overlapping the wall. Skip clumps whose bottom is too high for the mobile layout.
+        if (isMobile && c.bottom > 5) return;
         const el = document.createElement('div');
         el.className = 'grass-clump'
           + (c.sway ? ' wind' : '')

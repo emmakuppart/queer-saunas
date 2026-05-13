@@ -438,3 +438,34 @@ footer {
   color: #888;
   font-size: 0.9rem;
 }
+
+/* Mobile tweaks: shrink the sauna and grass; let the sauna sit a bit lower */
+@media (max-width: 600px) {
+  .sauna-scene {
+    width: 78%;
+    transform: translateY(90px);
+  }
+  .hero-text {
+    transform: translateY(90px);
+  }
+  .grass-clump {
+    transform: scale(0.6);
+    transform-origin: 50% 100%;
+  }
+  .vapor span {
+    width: 5px;
+    margin-left: -2.5px;
+    height: 50px;
+    filter: blur(4px);
+    animation-name: smoke-mobile;
+  }
+}
+
+/* Mobile smoke rises a shorter distance and fades sooner so it stays within the picture */
+@keyframes smoke-mobile {
+  0%   { transform: translateY(0) scaleX(1);    opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translateY(-60px) scaleX(3); opacity: 0.75; }
+  85%  { opacity: 0.1; }
+  100% { transform: translateY(-110px) scaleX(5); opacity: 0; }
+}
