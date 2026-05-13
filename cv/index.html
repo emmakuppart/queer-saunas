@@ -573,8 +573,10 @@
         const duration = 0.8 + Math.random() * 2;
         leaves[i] = {
           x: 0.03 + Math.random() * 0.94,
-          y: 0.02 + Math.random() * 0.58,
-          r: (3 + Math.random() * 6) / 2,
+          // keep dots inside the foliage band (~22%-50% from top of forest image)
+          y: 0.22 + Math.random() * 0.28,
+          // base radius (in px @1400-wide canvas); scaled down on smaller canvases
+          rBase: 1.5 + Math.random() * 3,
           duration,
           phase: Math.random() * duration,
           driftX: Math.random() * 6 - 3,
@@ -601,6 +603,8 @@
       function frame(now) {
         ctx.clearRect(0, 0, W, H);
         const tSec = now / 1000;
+        // scale dot radius with canvas width: full size at 1400px+, smaller on mobile
+        const sizeScale = Math.min(1, W / 1400);
         for (let i = 0; i < COUNT; i++) {
           const L = leaves[i];
           const c = ((tSec + L.phase) / L.duration) % 1;
@@ -610,7 +614,7 @@
           ctx.globalAlpha = a;
           ctx.fillStyle = L.color;
           ctx.beginPath();
-          ctx.arc(L.x * W + L.driftX * wave, L.y * H + L.driftY * wave, L.r, 0, PI * 2);
+          ctx.arc(L.x * W + L.driftX * wave, L.y * H + L.driftY * wave, L.rBase * sizeScale, 0, PI * 2);
           ctx.fill();
         }
         ctx.globalAlpha = 1;
