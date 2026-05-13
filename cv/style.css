@@ -441,6 +441,9 @@ footer {
 
 /* Mobile tweaks: shrink the sauna and grass; let the sauna sit a bit lower */
 @media (max-width: 600px) {
+  .hero {
+    min-height: 34vh;
+  }
   .sauna-scene {
     width: 78%;
     transform: translateY(90px);
